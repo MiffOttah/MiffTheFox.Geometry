@@ -4,22 +4,22 @@ using System.Text;
 
 namespace MiffTheFox.Geometry.Integer
 {
-    public readonly struct Point : IEquatable<Point>, IFormattable
+    public readonly struct IntPoint : IEquatable<IntPoint>, IFormattable
     {
-        public static Point Empty { get; } = new Point();
+        public static IntPoint Empty { get; } = new IntPoint();
 
         public int X { get; }
         public int Y { get; }
 
-        public Point(int x, int y)
+        public IntPoint(int x, int y)
         {
             X = x;
             Y = y;
         }
 
-        public Point With(int? x = null, int? y = null)
+        public IntPoint With(int? x = null, int? y = null)
         {
-            return new Point(x ?? X, y ?? Y);
+            return new IntPoint(x ?? X, y ?? Y);
         }
 
         public void Deconstruct(out int x, out int y)
@@ -29,16 +29,16 @@ namespace MiffTheFox.Geometry.Integer
         }
 
         public override bool Equals(object obj)
-            => obj is Point point && Equals(point);
+            => obj is IntPoint point && Equals(point);
 
-        public bool Equals(Point other)
+        public bool Equals(IntPoint other)
             => X == other.X && Y == other.Y;
 
         public override int GetHashCode()
             => (245009355 + X) * -1521134295 + Y;
 
-        public static bool operator ==(Point left, Point right) => left.Equals(right);
-        public static bool operator !=(Point left, Point right) => !left.Equals(right);
+        public static bool operator ==(IntPoint left, IntPoint right) => left.Equals(right);
+        public static bool operator !=(IntPoint left, IntPoint right) => !left.Equals(right);
 
         public string ToString(IFormatProvider formatProvider)
         {
@@ -48,9 +48,9 @@ namespace MiffTheFox.Geometry.Integer
         string IFormattable.ToString(string format, IFormatProvider formatProvider) => ToString(formatProvider);
         public override string ToString() => ToString(System.Globalization.CultureInfo.CurrentCulture);
 
-        public static Point operator +(Point p1, Point p2)
+        public static IntPoint operator +(IntPoint p1, IntPoint p2)
         {
-            return new Point(p1.X + p2.X, p1.Y + p2.Y);
+            return new IntPoint(p1.X + p2.X, p1.Y + p2.Y);
         }
     }
 }

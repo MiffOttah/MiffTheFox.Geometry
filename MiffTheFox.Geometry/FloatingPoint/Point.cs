@@ -4,14 +4,14 @@ using System.Text;
 
 namespace MiffTheFox.Geometry.FloatingPoint
 {
-    public readonly struct FPoint : IEquatable<FPoint>, IFormattable
+    public readonly struct Point : IEquatable<Point>, IFormattable
     {
-        public static FPoint Empty { get; } = new FPoint();
+        public static Point Empty { get; } = new Point();
 
         public double X { get; }
         public double Y { get; }
 
-        public FPoint(double x, double y)
+        public Point(double x, double y)
         {
             if (double.IsInfinity(x) || double.IsNaN(x)) throw new ArgumentException("Parameter cannot be infinity or NaN.", nameof(x));
             if (double.IsInfinity(y) || double.IsNaN(y)) throw new ArgumentException("Parameter cannot be infinity or NaN.", nameof(x));
@@ -20,9 +20,9 @@ namespace MiffTheFox.Geometry.FloatingPoint
             Y = y;
         }
 
-        public FPoint With(double? x = null, double? y = null)
+        public Point With(double? x = null, double? y = null)
         {
-            return new FPoint(x ?? X, y ?? Y);
+            return new Point(x ?? X, y ?? Y);
         }
 
         public void Deconstruct(out double x, out double y)
@@ -32,13 +32,13 @@ namespace MiffTheFox.Geometry.FloatingPoint
         }
 
         public override bool Equals(object obj)
-            => obj is FPoint point && Equals(point);
+            => obj is Point point && Equals(point);
 
-        public bool Equals(FPoint other)
+        public bool Equals(Point other)
             => X == other.X && Y == other.Y;
 
-        public static bool operator ==(FPoint left, FPoint right) => left.Equals(right);
-        public static bool operator !=(FPoint left, FPoint right) => !left.Equals(right);
+        public static bool operator ==(Point left, Point right) => left.Equals(right);
+        public static bool operator !=(Point left, Point right) => !left.Equals(right);
 
 
         public string ToString(string format, IFormatProvider formatProvider)
@@ -51,17 +51,17 @@ namespace MiffTheFox.Geometry.FloatingPoint
 
         public override int GetHashCode() => (245009355 + X.GetHashCode()) * -1521134295 + Y.GetHashCode();
 
-        public static FPoint operator +(FPoint p1, FPoint p2)
+        public static Point operator +(Point p1, Point p2)
         {
-            return new FPoint(p1.X + p2.X, p1.Y + p2.Y);
+            return new Point(p1.X + p2.X, p1.Y + p2.Y);
         }
 
-        public static implicit operator FPoint(Integer.Point p) => new FPoint(p.X, p.Y);
-        public static explicit operator Integer.Point(FPoint p) => p.ToIntPoint();
+        public static implicit operator Point(Integer.IntPoint p) => new Point(p.X, p.Y);
+        public static explicit operator Integer.IntPoint(Point p) => p.ToIntPoint();
 
-        public Integer.Point ToIntPoint(MidpointRounding rounding = MidpointRounding.AwayFromZero)
+        public Integer.IntPoint ToIntPoint(MidpointRounding rounding = MidpointRounding.AwayFromZero)
         {
-            return new Integer.Point((int)Math.Round(X, rounding), (int)Math.Round(Y, rounding));
+            return new Integer.IntPoint((int)Math.Round(X, rounding), (int)Math.Round(Y, rounding));
 
         }
     }

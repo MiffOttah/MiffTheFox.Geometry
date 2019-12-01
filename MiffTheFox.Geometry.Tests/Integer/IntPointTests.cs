@@ -4,7 +4,7 @@ using MiffTheFox.Geometry.Integer;
 namespace MiffTheFox.Geometry.Tests.Integer
 {
     [TestClass]
-    public class PointTests
+    public class IntPointTests
     {
         [DataRow(0, 0, DisplayName = "Empty point")]
         [DataRow(1, 3, DisplayName = "1,3")]
@@ -14,7 +14,7 @@ namespace MiffTheFox.Geometry.Tests.Integer
         [TestMethod]
         public void TestCreation(int x, int y)
         {
-            var point = new Point(x, y);
+            var point = new IntPoint(x, y);
             Assert.AreEqual(x, point.X);
             Assert.AreEqual(y, point.Y);
         }
@@ -22,7 +22,7 @@ namespace MiffTheFox.Geometry.Tests.Integer
         [TestMethod]
         public void TestEmpty()
         {
-            var point = Point.Empty;
+            var point = IntPoint.Empty;
             Assert.AreEqual(0, point.X);
             Assert.AreEqual(0, point.Y);
         }
@@ -30,7 +30,7 @@ namespace MiffTheFox.Geometry.Tests.Integer
         [TestMethod]
         public void TestWith()
         {
-            var point = new Point(1, 2);
+            var point = new IntPoint(1, 2);
             var point2 = point.With(y: 3);
             var point3 = point.With(x: -1);
             var point4 = point.With(-5, -5);
@@ -51,7 +51,7 @@ namespace MiffTheFox.Geometry.Tests.Integer
         [TestMethod]
         public void TestDeconstruct(int x, int y)
         {
-            var point = new Point(x, y);
+            var point = new IntPoint(x, y);
             int x2, y2;
 
             (x2, y2) = point;
@@ -64,10 +64,10 @@ namespace MiffTheFox.Geometry.Tests.Integer
         [TestMethod]
         public void TestCompare()
         {
-            var a = new Point(1, 2);
-            var b = new Point(50, -10);
-            var c = new Point(11, 15);
-            var d = new Point(1, 2);
+            var a = new IntPoint(1, 2);
+            var b = new IntPoint(50, -10);
+            var c = new IntPoint(11, 15);
+            var d = new IntPoint(1, 2);
 
             Assert.IsFalse(a.Equals(b));
             Assert.IsTrue(a.Equals(d));
@@ -95,9 +95,9 @@ namespace MiffTheFox.Geometry.Tests.Integer
         [DataRow(0, 0, 1, 0, 1, 0)]
         public void TestAdd(int x1, int y1, int x2, int y2, int xR, int yR)
         {
-            var p1 = new Point(x1, y1);
-            var p2 = new Point(x2, y2);
-            Assert.AreEqual(new Point(xR, yR), p1 + p2);
+            var p1 = new IntPoint(x1, y1);
+            var p2 = new IntPoint(x2, y2);
+            Assert.AreEqual(new IntPoint(xR, yR), p1 + p2);
         }
     }
 }

@@ -6,7 +6,7 @@ using System;
 namespace MiffTheFox.Geometry.Tests.FloatingPoint
 {
     [TestClass]
-    public class FPointTests
+    public class PointTests
     {
         [DataRow(0, 0, DisplayName = "Empty point")]
         [DataRow(1.5, 3, DisplayName = "1.5,3")]
@@ -16,7 +16,7 @@ namespace MiffTheFox.Geometry.Tests.FloatingPoint
         [TestMethod]
         public void TestCreation(double x, double y)
         {
-            var point = new FPoint(x, y);
+            var point = new Point(x, y);
             Assert.AreEqual(x, point.X);
             Assert.AreEqual(y, point.Y);
         }
@@ -30,14 +30,14 @@ namespace MiffTheFox.Geometry.Tests.FloatingPoint
         [TestMethod]
         public void TestInvalidCreation(double x, double y)
         {
-            Assert.ThrowsException<ArgumentException>(() => new FPoint(x, y));
+            Assert.ThrowsException<ArgumentException>(() => new Point(x, y));
         }
 
 
         [TestMethod]
         public void TestEmpty()
         {
-            var point = FPoint.Empty;
+            var point = Point.Empty;
             Assert.AreEqual(0.0, point.X);
             Assert.AreEqual(0.0, point.Y);
         }
@@ -45,7 +45,7 @@ namespace MiffTheFox.Geometry.Tests.FloatingPoint
         [TestMethod]
         public void TestWith()
         {
-            var point = new FPoint(0.3, 0.2);
+            var point = new Point(0.3, 0.2);
             var point2 = point.With(y: 2.0);
             var point3 = point.With(x: -1.1);
             var point4 = point.With(-5, -5);
@@ -66,7 +66,7 @@ namespace MiffTheFox.Geometry.Tests.FloatingPoint
         [TestMethod]
         public void TestDeconstruct(double x, double y)
         {
-            var point = new FPoint(x, y);
+            var point = new Point(x, y);
             double x2, y2;
 
             (x2, y2) = point;
@@ -79,10 +79,10 @@ namespace MiffTheFox.Geometry.Tests.FloatingPoint
         [TestMethod]
         public void TestCompare()
         {
-            var a = new FPoint(1, 2);
-            var b = new FPoint(50, -10);
-            var c = new FPoint(11, 15);
-            var d = new FPoint(1, 2);
+            var a = new Point(1, 2);
+            var b = new Point(50, -10);
+            var c = new Point(11, 15);
+            var d = new Point(1, 2);
 
             Assert.IsFalse(a.Equals(b));
             Assert.IsTrue(a.Equals(d));
@@ -110,9 +110,9 @@ namespace MiffTheFox.Geometry.Tests.FloatingPoint
         [DataRow(0, 0, 1, 0, 1, 0)]
         public void TestAdd(double x1, double y1, double x2, double y2, double xR, double yR)
         {
-            var p1 = new FPoint(x1, y1);
-            var p2 = new FPoint(x2, y2);
-            Assert.AreEqual(new FPoint(xR, yR), p1 + p2);
+            var p1 = new Point(x1, y1);
+            var p2 = new Point(x2, y2);
+            Assert.AreEqual(new Point(xR, yR), p1 + p2);
         }
 
         [TestMethod]
@@ -123,8 +123,8 @@ namespace MiffTheFox.Geometry.Tests.FloatingPoint
         [DataRow(5.5, 4.5, 6, 4, MidpointRounding.ToEven, DisplayName = "Even rounding")]
         public void TestCast(double x, double y, int xR, int yR, MidpointRounding rounding)
         {
-            var p = new FPoint(x, y);
-            var pR = new Point(xR, yR);
+            var p = new Point(x, y);
+            var pR = new IntPoint(xR, yR);
             Assert.AreEqual(pR, p.ToIntPoint(rounding));
         }
     }

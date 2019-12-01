@@ -8,6 +8,11 @@ namespace MiffTheFox.Geometry
     {
         public double Value { get; }
 
+        public static Portion Empty { get; } = new Portion(0);
+        public static Portion Full { get; } = new Portion(1);
+
+        public Portion Complement => new Portion(1.0 - Value);
+
         public Portion(double value)
         {
             if (double.IsInfinity(value) || double.IsNaN(value)) throw new ArgumentException("Value cannot be infinity or NaN.", nameof(value));

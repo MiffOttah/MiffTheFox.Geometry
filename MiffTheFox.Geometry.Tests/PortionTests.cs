@@ -8,6 +8,8 @@ namespace MiffTheFox.Geometry.Tests
     [TestClass]
     public class PortionTests
     {
+        const double DELTA = 0.000001; // good ol' floating-points
+
         [TestMethod]
         [DataRow(0)]
         [DataRow(0.25)]
@@ -37,6 +39,25 @@ namespace MiffTheFox.Geometry.Tests
         public void TestFailedCreationFromInvalidDouble(double value)
         {
             Assert.ThrowsException<ArgumentException>(() => new Portion(value));
+        }
+
+        [TestMethod]
+        public void TestStaticPortions()
+        {
+            Assert.AreEqual(0.0, Portion.Empty.Value);
+            Assert.AreEqual(1.0, Portion.Full.Value);
+        }
+
+        [TestMethod]
+        [DataRow(0, 1)]
+        [DataRow(0.2, 0.8)]
+        [DataRow(0.5, 0.5)]
+        [DataRow(0.7, 0.3)]
+        [DataRow(1, 0)]
+        public void TestComplement(double value, double complement)
+        {
+            var por = new Portion(value);
+            Assert.AreEqual(complement, por.Complement.Value, DELTA);
         }
     }
 }

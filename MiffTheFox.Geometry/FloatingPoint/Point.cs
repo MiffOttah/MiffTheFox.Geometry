@@ -62,7 +62,6 @@ namespace MiffTheFox.Geometry.FloatingPoint
         public Integer.IntPoint ToIntPoint(MidpointRounding rounding = MidpointRounding.AwayFromZero)
         {
             return new Integer.IntPoint((int)Math.Round(X, rounding), (int)Math.Round(Y, rounding));
-
         }
     }
 }

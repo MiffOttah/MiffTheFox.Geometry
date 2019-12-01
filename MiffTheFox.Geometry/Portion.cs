@@ -33,5 +33,22 @@ namespace MiffTheFox.Geometry
         public static bool operator >=(Portion left, Portion right) => left.Value >= right.Value;
         public static bool operator <(Portion left, Portion right) => left.Value < right.Value;
         public static bool operator <=(Portion left, Portion right) => left.Value <= right.Value;
+
+        public override string ToString() => Value.ToString("G", null);
+        public string ToString(string format) => Value.ToString(format, null);
+        public string ToString(string format, IFormatProvider formatProvider) => Value.ToString(format, formatProvider);
+
+        public double Lerp(double max) => Value * max;
+        public double Lerp(double min, double max) => Value * max + min;
+
+        public int Lerp(int max, MidpointRounding midpointRounding = MidpointRounding.AwayFromZero)
+            => (int)Math.Round(Value * max, midpointRounding);
+        public int Lerp(int min, int max, MidpointRounding midpointRounding = MidpointRounding.AwayFromZero)
+            => (int)Math.Round(Value * max, midpointRounding) + min;
+
+        public static double operator *(Portion portion, double max) => portion.Lerp(max);
+        public static double operator *(double max, Portion portion) => portion.Lerp(max);
+        public static int operator *(Portion portion, int max) => portion.Lerp(max);
+        public static int operator *(int max, Portion portion) => portion.Lerp(max);
     }
 }

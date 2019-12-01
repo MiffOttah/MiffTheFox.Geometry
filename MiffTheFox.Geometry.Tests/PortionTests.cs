@@ -8,7 +8,7 @@ namespace MiffTheFox.Geometry.Tests
     [TestClass]
     public class PortionTests
     {
-        const double DELTA = 0.000001; // good ol' floating-points
+        const double DELTA = 1e-8; // good ol' floating-points
 
         [TestMethod]
         [DataRow(0)]
@@ -107,6 +107,38 @@ namespace MiffTheFox.Geometry.Tests
             Assert.IsTrue(c >= a);
             Assert.IsFalse(a >= c);
             Assert.IsTrue(b >= a);
+        }
+
+        [TestMethod]
+        [DataRow(0.1, 10, 1)]
+        [DataRow(0.5, -5, -2.5)]
+        [DataRow(0, -5, 0)]
+        [DataRow(1, -5, -5)]
+        [DataRow(0.8, 0, 0)]
+        public void TestFloatingPointLerp(double portion, double max, double expected)
+        {
+            var por = new Portion(portion);
+
+            Assert.AreEqual(expected, por.Lerp(max), DELTA);
+            Assert.AreEqual(expected + 1.0, por.Lerp(1.0, max), DELTA);
+            Assert.AreEqual(expected, por * max, DELTA);
+            Assert.AreEqual(expected, max * por, DELTA);
+        }
+
+        [TestMethod]
+        [DataRow(0.1, 10, 1)]
+        [DataRow(0.5, -5, -3)]
+        [DataRow(0, -5, 0)]
+        [DataRow(1, -5, -5)]
+        [DataRow(0.8, 0, 0)]
+        public void TestIntegerLerp(double portion, int max, int expected)
+        {
+            var por = new Portion(portion);
+
+            Assert.AreEqual(expected, por.Lerp(max), DELTA);
+            Assert.AreEqual(expected + 1, por.Lerp(1, max), DELTA);
+            Assert.AreEqual(expected, por * max, DELTA);
+            Assert.AreEqual(expected, max * por, DELTA);
         }
     }
 }

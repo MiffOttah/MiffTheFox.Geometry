@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MiffTheFox.Geometry.Integer;
 
 namespace MiffTheFox.Geometry.Tests.Integer
@@ -20,6 +17,14 @@ namespace MiffTheFox.Geometry.Tests.Integer
             var point = new Point(x, y);
             Assert.AreEqual(x, point.X);
             Assert.AreEqual(y, point.Y);
+        }
+
+        [TestMethod]
+        public void TestEmpty()
+        {
+            var point = Point.Empty;
+            Assert.AreEqual(0, point.X);
+            Assert.AreEqual(0, point.Y);
         }
 
         [TestMethod]
@@ -79,6 +84,20 @@ namespace MiffTheFox.Geometry.Tests.Integer
 
             Assert.IsTrue(a != c);
             Assert.IsFalse(a != d);
+
+            Assert.AreEqual(a, d);
+            Assert.AreNotEqual(a, b);
+        }
+
+        [TestMethod]
+        [DataRow(1, 2, 11, 12, 12, 14)]
+        [DataRow(-1, 2, 11, -12, 10, -10)]
+        [DataRow(0, 0, 1, 0, 1, 0)]
+        public void TestAdd(int x1, int y1, int x2, int y2, int xR, int yR)
+        {
+            var p1 = new Point(x1, y1);
+            var p2 = new Point(x2, y2);
+            Assert.AreEqual(new Point(xR, yR), p1 + p2);
         }
     }
 }

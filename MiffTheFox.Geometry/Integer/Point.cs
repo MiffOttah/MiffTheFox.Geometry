@@ -6,6 +6,8 @@ namespace MiffTheFox.Geometry.Integer
 {
     public readonly struct Point : IEquatable<Point>, IFormattable
     {
+        public static Point Empty { get; } = new Point();
+
         public int X { get; }
         public int Y { get; }
 
@@ -45,5 +47,10 @@ namespace MiffTheFox.Geometry.Integer
 
         string IFormattable.ToString(string format, IFormatProvider formatProvider) => ToString(formatProvider);
         public override string ToString() => ToString(System.Globalization.CultureInfo.CurrentCulture);
+
+        public static Point operator +(Point p1, Point p2)
+        {
+            return new Point(p1.X + p2.X, p1.Y + p2.Y);
+        }
     }
 }

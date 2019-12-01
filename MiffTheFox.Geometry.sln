@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiffTheFox.Geometry", "MiffTheFox.Geometry\MiffTheFox.Geometry.csproj", "{78DC5AE2-6768-463B-8583-3F4F0B4E75A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiffTheFox.Geometry.Tests", "MiffTheFox.Geometry.Tests\MiffTheFox.Geometry.Tests.csproj", "{3565566E-A3F1-46BE-989B-A6D1825BA519}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc Files", "Misc Files", "{2FA0324C-99BD-4248-9727-DFCD1C831EC6}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78DC5AE2-6768-463B-8583-3F4F0B4E75A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78DC5AE2-6768-463B-8583-3F4F0B4E75A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78DC5AE2-6768-463B-8583-3F4F0B4E75A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78DC5AE2-6768-463B-8583-3F4F0B4E75A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3565566E-A3F1-46BE-989B-A6D1825BA519}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3565566E-A3F1-46BE-989B-A6D1825BA519}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3565566E-A3F1-46BE-989B-A6D1825BA519}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3565566E-A3F1-46BE-989B-A6D1825BA519}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E847B3A4-F752-4F76-AB44-72719D249AC8}
+	EndGlobalSection
+EndGlobal

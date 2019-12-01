@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MiffTheFox.Geometry
 {
-    public readonly struct Portion
+    public readonly struct Portion : IEquatable<Portion>, IComparable<Portion>
     {
         public double Value { get; }
 
@@ -20,5 +20,18 @@ namespace MiffTheFox.Geometry
 
             Value = value;
         }
+
+        public override int GetHashCode() => -1937169414 + Value.GetHashCode();
+
+        public override bool Equals(object obj) => obj is Portion portion && Equals(portion);
+        public bool Equals(Portion other) => Value == other.Value;
+        public int CompareTo(Portion other) => Value.CompareTo(other.Value);
+
+        public static bool operator ==(Portion left, Portion right) => left.Value == right.Value;
+        public static bool operator !=(Portion left, Portion right) => left.Value != right.Value;
+        public static bool operator >(Portion left, Portion right) => left.Value > right.Value;
+        public static bool operator >=(Portion left, Portion right) => left.Value >= right.Value;
+        public static bool operator <(Portion left, Portion right) => left.Value < right.Value;
+        public static bool operator <=(Portion left, Portion right) => left.Value <= right.Value;
     }
 }

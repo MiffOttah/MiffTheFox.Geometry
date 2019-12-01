@@ -59,5 +59,54 @@ namespace MiffTheFox.Geometry.Tests
             var por = new Portion(value);
             Assert.AreEqual(complement, por.Complement.Value, DELTA);
         }
+
+        [TestMethod]
+        public void TestEquals()
+        {
+            var a = new Portion(0.2);
+            var b = new Portion(0.2);
+            var c = new Portion(0.8);
+
+            Assert.IsTrue(a.Equals(b));
+            Assert.IsTrue(b.Equals(a));
+            Assert.IsFalse(b.Equals(c));
+
+            Assert.IsTrue(a == b);
+            Assert.IsFalse(a == c);
+
+            Assert.IsTrue(a != c);
+            Assert.IsFalse(a != b);
+
+            Assert.AreEqual(a, b);
+            Assert.AreNotEqual(a, c);
+        }
+
+        [TestMethod]
+        public void TestCompare()
+        {
+            var a = new Portion(0.2);
+            var b = new Portion(0.2);
+            var c = new Portion(0.8);
+
+            Assert.AreEqual(1, c.CompareTo(a));
+            Assert.AreEqual(-1, a.CompareTo(c));
+            Assert.AreEqual(0, a.CompareTo(b));
+
+            Assert.IsTrue(a < c);
+            Assert.IsFalse(c < a);
+            Assert.IsFalse(b < a);
+
+            Assert.IsTrue(c > a);
+            Assert.IsFalse(a > c);
+            Assert.IsFalse(b > a);
+
+            Assert.IsTrue(a <= c);
+            Assert.IsFalse(c <= a);
+            Assert.IsTrue(b <= a);
+
+            Assert.IsTrue(c >= a);
+            Assert.IsFalse(a >= c);
+            Assert.IsTrue(b >= a);
+        }
     }
 }

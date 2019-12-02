@@ -60,5 +60,22 @@ namespace MiffTheFox.Geometry
             return new Portion((double)numerator / (double)denominator);
         }
         public static Portion Fraction(int denominator) => Fraction(1, denominator);
+
+        private static Portion _CastIn(double value)
+        {
+            // helper method to throw InvalidCastException rather than ArgumentException
+            if (double.IsInfinity(value) || double.IsNaN(value) || value < 0 || value > 1) throw new InvalidCastException();
+            return new Portion(value);
+        }
+
+        public static explicit operator double(Portion v) => v.Value;
+        public static explicit operator float(Portion v) => Convert.ToSingle(v.Value);
+        public static explicit operator decimal(Portion v) => Convert.ToDecimal(v.Value);
+        public static explicit operator byte(Portion v) => Convert.ToByte(v.Lerp(255));
+
+        public static explicit operator Portion(double v) => _CastIn(v);
+        public static explicit operator Portion(float v) => _CastIn(v);
+        public static explicit operator Portion(decimal v) => _CastIn(Convert.ToDouble(v));
+        public static explicit operator Portion(byte v) => Fraction(v, 255);
     }
 }

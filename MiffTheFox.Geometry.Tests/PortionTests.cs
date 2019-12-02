@@ -180,5 +180,40 @@ namespace MiffTheFox.Geometry.Tests
         {
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => Portion.Fraction(denom));
         }
+
+        [TestMethod]
+        public void TestCast()
+        {
+            var por = new Portion(0.4);
+            const byte byteValue = 102;
+
+            Assert.AreEqual(0.4, (double)por, DELTA);
+            Assert.AreEqual(0.4f, (float)por, 1e-8f);
+            Assert.AreEqual(0.4M, (decimal)por);
+            Assert.AreEqual(byteValue, (byte)por);
+
+            Assert.AreEqual(por.Value, ((Portion)0.4).Value, DELTA);
+            Assert.AreEqual(por.Value, ((Portion)0.4f).Value, DELTA);
+            Assert.AreEqual(por.Value, ((Portion)0.4M).Value, DELTA);
+            Assert.AreEqual(por.Value, ((Portion)byteValue).Value, DELTA);
+        }
+
+        [TestMethod]
+        [DataRow(1.1, DisplayName = "Double >1")]
+        [DataRow(-2, DisplayName = "Double <0")]
+        [DataRow(double.NaN, DisplayName = "Double NaN")]
+        [DataRow(double.PositiveInfinity, DisplayName = "Double Infinity")]
+        [DataRow(1.1f, DisplayName = "Float >1")]
+        [DataRow(-2f, DisplayName = "Float <0")]
+        [DataRow(float.NaN, DisplayName = "Float NaN")]
+        [DataRow(float.PositiveInfinity, DisplayName = "Float Infinity")]
+        // cast from decimal isn't tested becuase it can't be in a DataRow
+        // however, we can assume that it will follow the double/single cases
+        // due to the same _CastIn method being called after casting the decimal
+        // to a double.
+        public void TestFailedCastIn(object source)
+        {
+            Assert.ThrowsException<InvalidCastException>(() => (Portion)source);
+        }
     }
 }

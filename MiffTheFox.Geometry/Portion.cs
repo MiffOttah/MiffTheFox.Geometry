@@ -50,5 +50,15 @@ namespace MiffTheFox.Geometry
         public static double operator *(double max, Portion portion) => portion.Lerp(max);
         public static int operator *(Portion portion, int max) => portion.Lerp(max);
         public static int operator *(int max, Portion portion) => portion.Lerp(max);
+
+        public static Portion Fraction(int numerator, int denominator)
+        {
+            if (numerator < 0) throw new ArgumentOutOfRangeException(nameof(numerator), "Numerator cannot be negative.");
+            if (denominator <= 0) throw new ArgumentOutOfRangeException(nameof(denominator), "Denominator cannot be negative or zero.");
+            if (numerator > denominator) throw new ArgumentOutOfRangeException(nameof(numerator), "Numerator cannot be greater than denominator.");
+
+            return new Portion((double)numerator / (double)denominator);
+        }
+        public static Portion Fraction(int denominator) => Fraction(1, denominator);
     }
 }

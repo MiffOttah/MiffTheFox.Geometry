@@ -140,5 +140,45 @@ namespace MiffTheFox.Geometry.Tests
             Assert.AreEqual(expected, por * max, DELTA);
             Assert.AreEqual(expected, max * por, DELTA);
         }
+
+        [TestMethod]
+        [DataRow(1, 1, 1)]
+        [DataRow(1, 2, 0.5)]
+        [DataRow(3, 4, 0.75)]
+        [DataRow(0, 2, 0)]
+        public void TestPortion(int num, int denom, double expected)
+        {
+            var por = Portion.Fraction(num, denom);
+            Assert.AreEqual(expected, por.Value, DELTA);
+        }
+
+        [TestMethod]
+        [DataRow(1, 1)]
+        [DataRow(2, 0.5)]
+        [DataRow(4, 0.25)]
+        [DataRow(5, 0.2)]
+        public void TestPortionWithoutNumerator(int denom, double expected)
+        {
+            var por = Portion.Fraction(denom);
+            Assert.AreEqual(expected, por.Value, DELTA);
+        }
+
+        [TestMethod]
+        [DataRow(-1, 2, DisplayName = "Numerator negative")]
+        [DataRow(2, 0, DisplayName = "Denominator zero")]
+        [DataRow(2, -1, DisplayName = "Denominator negative")]
+        [DataRow(2, 1, DisplayName = "Numerator greater than denominator")]
+        public void TestPortionOutOfRange(int num, int denom)
+        {
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => Portion.Fraction(num, denom));
+        }
+
+        [TestMethod]
+        [DataRow(0, DisplayName = "Denominator zero")]
+        [DataRow(-1, DisplayName = "Denominator negative")]
+        public void TestPortionWithoutNumeratorOutOfRange(int denom)
+        {
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => Portion.Fraction(denom));
+        }
     }
 }

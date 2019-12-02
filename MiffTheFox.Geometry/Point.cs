@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MiffTheFox.Geometry.FloatingPoint
+namespace MiffTheFox.Geometry
 {
     public readonly struct Point : IEquatable<Point>, IFormattable
     {

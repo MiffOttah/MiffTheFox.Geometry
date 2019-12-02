@@ -1,9 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MiffTheFox.Geometry.Integer;
-using MiffTheFox.Geometry.FloatingPoint;
 using System;
 
-namespace MiffTheFox.Geometry.Tests.FloatingPoint
+namespace MiffTheFox.Geometry.Tests
 {
     [TestClass]
     public class PointTests

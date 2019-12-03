@@ -111,6 +111,12 @@ namespace MiffTheFox.Geometry
         public static bool operator >=(Angle x, Angle y) => x.Turns >= y.Turns;
         public static bool operator <(Angle x, Angle y) => x.Turns < y.Turns;
         public static bool operator <=(Angle x, Angle y) => x.Turns <= y.Turns;
+
+        public static Angle operator +(Angle x, Angle y) => new Angle(x.Turns + y.Turns);
+        public static Angle operator -(Angle x, Angle y) => new Angle(x.Turns - y.Turns);
+        public static Angle operator *(Angle portion, double multiple) => new Angle(portion.Turns * multiple);
+        public static Angle operator *(double multiple, Angle portion) => new Angle(portion.Turns * multiple);
+        public static Angle operator /(Angle portion, double divisor) => new Angle(portion.Turns / divisor);
     }
 
     public enum AngleUnit : byte

@@ -137,5 +137,15 @@ namespace MiffTheFox.Geometry.Tests
             Assert.IsTrue(b >= b2);
             Assert.IsFalse(b >= c);
         }
+
+        [TestMethod]
+        public void TestOperators()
+        {
+            Assert.AreEqual(1.0, (new Angle(0.4) + new Angle(0.6)).Turns, DELTA);
+            Assert.AreEqual(-0.2, (new Angle(0.4) - new Angle(0.6)).Turns, DELTA);
+            Assert.AreEqual(0.8, (new Angle(0.4) * 2).Turns, DELTA);
+            Assert.AreEqual(1.2, (3 * new Angle(0.4)).Turns, DELTA);
+            Assert.AreEqual(0.25, (new Angle(0.5) / 2).Turns, DELTA);
+        }
     }
 }

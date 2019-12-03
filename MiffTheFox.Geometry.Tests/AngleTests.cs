@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace MiffTheFox.Geometry.Tests
@@ -61,6 +62,23 @@ namespace MiffTheFox.Geometry.Tests
         {
             var angle = new Angle(turns);
             Assert.AreEqual(expected, angle.ToUnit(toUnit));
+        }
+
+        [TestMethod]
+        [DataRow(0, null, "0", DisplayName = "Null format string")]
+        [DataRow(1, "F2", "6.28", DisplayName = "Radians F2")]
+        [DataRow(0.5, "F2τ", "0.50τ", DisplayName = "Turns F2")]
+        [DataRow(0.25, "F1°", "90.0°", DisplayName = "Degrees F1")]
+        [DataRow(0.25, "F1%", "25.0%", DisplayName = "Percent F1")]
+        [DataRow(0.25, "F3π", "0.500π", DisplayName = "PiRadians F3")]
+        [DataRow(0.25, "F1 gon", "100.0 gon", DisplayName = "Gradians F1")]
+        [DataRow(0.25, "°", "90°", DisplayName = "Degrees unit only")]
+        [DataRow(0.25, "gon", "100 gon", DisplayName = "Gradians unit only")]
+        public void TestToString(double turns, string formatString, string expected)
+        {
+            var angle = new Angle(turns);
+            string angleStr = angle.ToString(formatString, CultureInfo.InvariantCulture);
+            Assert.AreEqual(expected, angleStr);
         }
     }
 }

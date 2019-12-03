@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MiffTheFox.Geometry
 {
-    public readonly struct Angle
+    public readonly struct Angle : IFormattable
     {
         public double Turns { get; }
         public double Radians => ToUnit(AngleUnit.Radians);
@@ -19,7 +19,7 @@ namespace MiffTheFox.Geometry
             => Turns = turns.Value;
 
         public double ToUnit(AngleUnit unit) => Turns * _GetConstantForAngleUnit(unit);
-        
+
         private static double _ConvertUnit(double value, AngleUnit from, AngleUnit to)
         {
             double factor = _GetConstantForAngleUnit(to) / _GetConstantForAngleUnit(from);
@@ -37,6 +37,61 @@ namespace MiffTheFox.Geometry
                 case AngleUnit.PiRadians: return 2;
                 case AngleUnit.Gradians: return 400;
                 case AngleUnit.Percent: return 100;
+                default: throw new ArgumentException("Unknown angle unit.", nameof(unit));
+            }
+        }
+
+        public override string ToString() => ToString(null, null);
+        public string ToString(string format) => ToString(format, null);
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            var unit = AngleUnit.Radians;
+            if (!string.IsNullOrEmpty(format))
+            {
+                if (format == "P" || format == "p")
+                {
+                    format = null;
+                    unit = AngleUnit.Percent;
+                }
+                else
+                {
+                    switch (format[format.Length - 1])
+                    {
+                        case 'τ': unit = AngleUnit.Turns; format = format.Remove(format.Length - 1); break;
+                        case 'π': unit = AngleUnit.PiRadians; format = format.Remove(format.Length - 1); break;
+                        case '°': unit = AngleUnit.Degrees; format = format.Remove(format.Length - 1); break;
+                        case '%': unit = AngleUnit.Percent; format = format.Remove(format.Length - 1); break;
+                        default:
+
+                            if (format.EndsWith(" gon", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                format = format.Remove(format.Length - 4);
+                                unit = AngleUnit.Gradians;
+                            }
+                            else if (format == "gon")
+                            {
+                                format = null;
+                                unit = AngleUnit.Gradians;
+                            }
+
+                            break;
+                    }
+                }
+            }
+            return ToString(unit, format, formatProvider);
+        }
+        public string ToString(AngleUnit unit, string decimalFormat, IFormatProvider formatProvider)
+        {
+            string valueString = ToUnit(unit).ToString(decimalFormat, formatProvider);
+
+            switch (unit)
+            {
+                case AngleUnit.Turns: return valueString + "τ";
+                case AngleUnit.Degrees: return valueString + "°";
+                case AngleUnit.Radians: return valueString;
+                case AngleUnit.PiRadians: return valueString + "π";
+                case AngleUnit.Gradians: return valueString + " gon";
+                case AngleUnit.Percent: return valueString + "%";
                 default: throw new ArgumentException("Unknown angle unit.", nameof(unit));
             }
         }

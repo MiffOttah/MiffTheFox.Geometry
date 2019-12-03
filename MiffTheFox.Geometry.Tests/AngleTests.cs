@@ -31,6 +31,16 @@ namespace MiffTheFox.Geometry.Tests
         }
 
         [TestMethod]
+        [DataRow(double.NaN)]
+        [DataRow(double.NegativeInfinity)]
+        [DataRow(double.PositiveInfinity)]
+        public void TestFailedCreation(double value)
+        {
+            Assert.ThrowsException<ArgumentException>(() => new Angle(value));
+            Assert.ThrowsException<ArgumentException>(() => new Angle(value, AngleUnit.Radians));
+        }
+
+        [TestMethod]
         [DataRow(0, 0)]
         [DataRow(0.25, Math.PI * 0.5)]
         [DataRow(0.5, Math.PI)]

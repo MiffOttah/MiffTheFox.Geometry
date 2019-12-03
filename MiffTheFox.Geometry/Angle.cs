@@ -10,21 +10,21 @@ namespace MiffTheFox.Geometry
         public double Radians => ToUnit(AngleUnit.Radians);
 
         public Angle(double value, AngleUnit unit)
-            => Turns = value / _GetConstantForAngleUnit(unit);
+            => Turns = _CheckValue(value, nameof(value)) / _GetConstantForAngleUnit(unit);
 
         public Angle(double turns)
-            => Turns = turns;
+            => Turns = _CheckValue(turns, nameof(turns));
 
         public Angle(Portion turns)
-            => Turns = turns.Value;
+            => Turns = turns.Value; // Portions can be trusted to not be infinity or NaN
+
+        private static double _CheckValue(double value, string parameterName)
+        {
+            if (double.IsNaN(value) || double.IsInfinity(value)) throw new ArgumentException("Value cannot be NaN or infinity.", parameterName);
+            return value;
+        }
 
         public double ToUnit(AngleUnit unit) => Turns * _GetConstantForAngleUnit(unit);
-
-        private static double _ConvertUnit(double value, AngleUnit from, AngleUnit to)
-        {
-            double factor = _GetConstantForAngleUnit(to) / _GetConstantForAngleUnit(from);
-            return value * factor;
-        }
 
         private static double _GetConstantForAngleUnit(AngleUnit unit)
         {

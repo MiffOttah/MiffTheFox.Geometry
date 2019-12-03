@@ -80,5 +80,52 @@ namespace MiffTheFox.Geometry.Tests
             string angleStr = angle.ToString(formatString, CultureInfo.InvariantCulture);
             Assert.AreEqual(expected, angleStr);
         }
+
+        [TestMethod]
+        public void TestEquality()
+        {
+            Angle a = new Angle(0.45);
+            Angle b = new Angle(0.45);
+            Angle c = new Angle(0.55);
+
+            Assert.IsTrue(a == b);
+            Assert.IsFalse(a == c);
+            Assert.IsTrue(a != c);
+            Assert.IsFalse(a != b);
+
+            Assert.IsTrue(a.Equals(b));
+            Assert.IsFalse(a.Equals(c));
+            Assert.IsTrue(a.Equals((object)b));
+            Assert.IsFalse(a.Equals((object)c));
+        }
+
+        [TestMethod]
+        public void TestCompare()
+        {
+            Angle a = new Angle(0.45);
+            Angle b = new Angle(0.50);
+            Angle c = new Angle(0.55);
+            Angle b2 = new Angle(0.50);
+
+            Assert.IsTrue(a.CompareTo(c) < 0);
+            Assert.IsTrue(c.CompareTo(a) > 0);
+            Assert.IsTrue(b.CompareTo(b2) == 0);
+
+            Assert.IsFalse(b < a);
+            Assert.IsFalse(b < b2);
+            Assert.IsTrue(b < c);
+
+            Assert.IsFalse(b <= a);
+            Assert.IsTrue(b <= b2);
+            Assert.IsTrue(b <= c);
+
+            Assert.IsTrue(b > a);
+            Assert.IsFalse(b > b2);
+            Assert.IsFalse(b > c);
+
+            Assert.IsTrue(b >= a);
+            Assert.IsTrue(b >= b2);
+            Assert.IsFalse(b >= c);
+        }
     }
 }

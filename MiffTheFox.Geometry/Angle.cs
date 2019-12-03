@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MiffTheFox.Geometry
 {
-    public readonly struct Angle : IFormattable
+    public readonly struct Angle : IFormattable, IEquatable<Angle>, IComparable<Angle>
     {
         public double Turns { get; }
         public double Radians => ToUnit(AngleUnit.Radians);
@@ -95,6 +95,22 @@ namespace MiffTheFox.Geometry
                 default: throw new ArgumentException("Unknown angle unit.", nameof(unit));
             }
         }
+
+        public override bool Equals(object obj) => obj is Angle angle && Equals(angle);
+        public bool Equals(Angle other) => Turns == other.Turns;
+        public override int GetHashCode() => 1224962691 + Turns.GetHashCode();
+
+        public int CompareTo(Angle other)
+        {
+            return Turns.CompareTo(other.Turns);
+        }
+
+        public static bool operator ==(Angle left, Angle right) => left.Turns == right.Turns;
+        public static bool operator !=(Angle left, Angle right) => left.Turns != right.Turns;
+        public static bool operator >(Angle x, Angle y) => x.Turns > y.Turns;
+        public static bool operator >=(Angle x, Angle y) => x.Turns >= y.Turns;
+        public static bool operator <(Angle x, Angle y) => x.Turns < y.Turns;
+        public static bool operator <=(Angle x, Angle y) => x.Turns <= y.Turns;
     }
 
     public enum AngleUnit : byte

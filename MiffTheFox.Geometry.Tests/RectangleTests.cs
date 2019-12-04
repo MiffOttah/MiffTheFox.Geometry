@@ -89,5 +89,17 @@ namespace MiffTheFox.Geometry.Tests
             Assert.IsFalse(r1 == r2);
             Assert.IsFalse(r1 != r3);
         }
+
+        [TestMethod]
+        public void TestWith()
+        {
+            var r = new Rectangle(10, 11, 12, 13);
+
+            Assert.AreEqual(new Rectangle(10, 11, 12, 13), r.With());
+            Assert.AreEqual(new Rectangle(20, 11, 12, 13), r.With(x: 20));
+            Assert.AreEqual(new Rectangle(10, 20, 12, 13), r.With(y: 20));
+            Assert.AreEqual(new Rectangle(10, 11, 20, 13), r.With(width: 20));
+            Assert.AreEqual(new Rectangle(10, 11, 12, 20), r.With(height: 20));
+        }
     }
 }

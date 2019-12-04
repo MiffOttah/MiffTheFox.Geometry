@@ -37,9 +37,14 @@ namespace MiffTheFox.Geometry
             Height = size.Height;
         }
 
+        public Rectangle With(double? x = null, double? y = null, double? width = null, double? height = null)
+        {
+            return new Rectangle(x ?? X, y ?? Y, width ?? Width, height ?? Height);
+        }
+
         public override bool Equals(object obj)
         {
-            return obj is Rectangle rectangle && Equals(rectangle);
+            return obj is Rectangle r && Equals(r);
         }
 
         public bool Equals(Rectangle other)

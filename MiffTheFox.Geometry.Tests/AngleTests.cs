@@ -41,6 +41,12 @@ namespace MiffTheFox.Geometry.Tests
         }
 
         [TestMethod]
+        public void TestStaticAngles()
+        {
+            Assert.AreEqual(0.0, Angle.Zero.Turns);
+        }
+
+        [TestMethod]
         [DataRow(0, 0)]
         [DataRow(0.25, Math.PI * 0.5)]
         [DataRow(0.5, Math.PI)]
@@ -51,6 +57,21 @@ namespace MiffTheFox.Geometry.Tests
         {
             var angle = new Angle(turns);
             Assert.AreEqual(expectedRadians, angle.Radians);
+        }
+
+        [TestMethod]
+        [DataRow(0, 0)]
+        [DataRow(1, 0)]
+        [DataRow(1.5, 0.5)]
+        [DataRow(-.75, 0.25)]
+        [DataRow(-2, 0)]
+        [DataRow(-2.5, 0.5)]
+        [DataRow(-3.1, 0.9)]
+        [DataRow(300, 0)]
+        public void TestCanonicalProperty(double turns, double expected)
+        {
+            var angle = new Angle(turns);
+            Assert.AreEqual(expected, angle.Canonical.Turns, DELTA);
         }
 
         [TestMethod]

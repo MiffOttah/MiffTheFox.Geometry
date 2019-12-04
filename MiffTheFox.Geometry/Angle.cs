@@ -6,8 +6,15 @@ namespace MiffTheFox.Geometry
 {
     public readonly struct Angle : IFormattable, IEquatable<Angle>, IComparable<Angle>
     {
+        public static readonly Angle Zero = new Angle(0);
+
         public double Turns { get; }
         public double Radians => ToUnit(AngleUnit.Radians);
+
+        /// <summary>
+        /// Returns an angle greater than or equal to 0τ but less than 1τ that is coterminal with this angle.
+        /// </summary>
+        public Angle Canonical => new Angle(Turns - Math.Floor(Turns));
 
         public Angle(double value, AngleUnit unit)
             => Turns = _CheckValue(value, nameof(value)) / _GetConstantForAngleUnit(unit);

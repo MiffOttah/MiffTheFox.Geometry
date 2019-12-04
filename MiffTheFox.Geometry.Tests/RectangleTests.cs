@@ -9,6 +9,8 @@ namespace MiffTheFox.Geometry.Tests
     [TestClass]
     public class RectangleTests
     {
+        const double DELTA = 1e-8; // good ol' floating-points
+
         [TestMethod]
         [DataRow(0, 0, 0, 0)]
         [DataRow(10, 10, 20, 20)]
@@ -175,6 +177,32 @@ namespace MiffTheFox.Geometry.Tests
         {
             var r = new Rectangle(x, y, w, h);
             Assert.AreEqual(new Rectangle(xExpected, yExpected, wExpected, hExpected), r.Canonical);
+        }
+
+        [TestMethod]
+        [DataRow(4, 5, 10, 13, 9, 11.5)]
+        [DataRow(0, 0, 30, 25, 15, 12.5)]
+        [DataRow(-10, -12, 2, 3, -9, -10.5)]
+        [DataRow(0, 0, -5, -6, -2.5, -3)]
+        [DataRow(4, -3, 10, 5, 9, -0.5)]
+        public void TestMidpoint(double x, double y, double w, double h, double midX, double midY)
+        {
+            var r = new Rectangle(x, y, w, h);
+            Assert.AreEqual(new Point(midX, midY), r.Midpoint);
+        }
+
+        [TestMethod]
+        [DataRow(0, 0, 10, 20, -5, -10, 10, 20)]
+        [DataRow(5, 10, 15, 20, -2.5, 0, 15, 20)]
+        [DataRow(-2, -2, 5, 5, -4.5, -4.5, 5, 5)]
+        [DataRow(11, 12, -1, -1, 11.5, 12.5, -1, -1)]
+        [DataRow(-10, 5, 10, 12, -15, -1, 10, 12)]
+        public void TestAround(double x, double y, double w, double h, double xExpected, double yExpected, double wExpected, double hExpected)
+        {
+            var expected = new Rectangle(xExpected, yExpected, wExpected, hExpected);
+
+            Assert.AreEqual(expected, Rectangle.Around(x, y, w, h));
+            Assert.AreEqual(expected, Rectangle.Around(new Point(x, y), new Size(w, h)));
         }
     }
 }

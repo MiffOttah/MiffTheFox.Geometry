@@ -8,8 +8,8 @@ namespace MiffTheFox.Geometry
     {
         public static readonly Rectangle Empty = new Rectangle();
 
-        public double X { get; } 
-        public double Y { get; } 
+        public double X { get; }
+        public double Y { get; }
         public double Width { get; }
         public double Height { get; }
 
@@ -43,6 +43,11 @@ namespace MiffTheFox.Geometry
             }
         }
 
+        /// <summary>
+        /// Gets the point in the center of the rectangle.
+        /// </summary>
+        public Point Midpoint => new Point(X + Width / 2, Y + Height / 2);
+
         public Rectangle(double x, double y, double width, double height)
         {
             _InternalUtility.ValidateDouble(x, nameof(x));
@@ -66,6 +71,18 @@ namespace MiffTheFox.Geometry
 
         public static Rectangle FromLTRB(double left, double top, double right, double bottom)
             => new Rectangle(left, top, right - left, bottom - top);
+
+        public static Rectangle Around(Point midpoint, Size size)
+        {
+            return new Rectangle(
+                midpoint.X - (size.Width / 2),
+                midpoint.Y - (size.Height / 2),
+                size.Width,
+                size.Height
+            );
+        }
+        public static Rectangle Around(double x, double y, double width, double right)
+            => Around(new Point(x, y), new Size(width, right));
 
         public void Deconstruct(out double x, out double y, out double width, out double height)
         {

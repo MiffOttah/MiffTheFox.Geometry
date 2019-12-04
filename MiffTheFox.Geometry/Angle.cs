@@ -124,6 +124,18 @@ namespace MiffTheFox.Geometry
         public static Angle operator *(Angle portion, double multiple) => new Angle(portion.Turns * multiple);
         public static Angle operator *(double multiple, Angle portion) => new Angle(portion.Turns * multiple);
         public static Angle operator /(Angle portion, double divisor) => new Angle(portion.Turns / divisor);
+
+        public static Angle ArcSin(double sine) => new Angle(Math.Asin(sine), AngleUnit.Radians);
+        public static Angle ArcCos(double cosine) => new Angle(Math.Acos(cosine), AngleUnit.Radians);
+        public static Angle ArcTan(double tangent) => new Angle(Math.Atan(tangent), AngleUnit.Radians);
+        public static Angle ArcTan2(double y, double x) => new Angle(Math.Atan2(y, x), AngleUnit.Radians);
+
+        public double Cos() => Math.Cos(Radians);
+        public double Sin() => Math.Sin(Radians);
+        public double Tan() => Math.Tan(Radians);
+        public double Cosh() => Math.Cosh(Radians);
+        public double Sinh() => Math.Sinh(Radians);
+        public double Tanh() => Math.Tanh(Radians);
     }
 
     public enum AngleUnit : byte

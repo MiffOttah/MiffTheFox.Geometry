@@ -168,5 +168,29 @@ namespace MiffTheFox.Geometry.Tests
             Assert.AreEqual(1.2, (3 * new Angle(0.4)).Turns, DELTA);
             Assert.AreEqual(0.25, (new Angle(0.5) / 2).Turns, DELTA);
         }
+
+        [TestMethod]
+        public void TestTrigCreation()
+        {
+            const double sqrt2over3 = 0.47140452079;
+
+            Assert.AreEqual(0.490882678, Angle.ArcSin(sqrt2over3).Radians, DELTA);
+            Assert.AreEqual(1.07991365, Angle.ArcCos(sqrt2over3).Radians, DELTA);
+            Assert.AreEqual(0.982793723, Angle.ArcTan(1.5).Radians, DELTA);
+            Assert.AreEqual(0.982793723, Angle.ArcTan2(3, 2).Radians, DELTA);
+        }
+
+        [TestMethod]
+        public void TestTrigMethods()
+        {
+            var angle = new Angle(Math.PI / 6, AngleUnit.Radians);
+
+            Assert.AreEqual(0.86602540378, angle.Cos(), DELTA);
+            Assert.AreEqual(0.5, angle.Sin(), DELTA);
+            Assert.AreEqual(0.57735026919, angle.Tan(), DELTA);
+            Assert.AreEqual(1.14023832108, angle.Cosh(), DELTA);
+            Assert.AreEqual(0.54785347388, angle.Sinh(), DELTA);
+            Assert.AreEqual(0.48047277815, angle.Tanh(), DELTA);
+        }
     }
 }

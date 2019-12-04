@@ -13,8 +13,8 @@ namespace MiffTheFox.Geometry
 
         public Size(double w, double h)
         {
-            if (double.IsInfinity(w) || double.IsNaN(w)) throw new ArgumentException("Parameter cannot be infinity or NaN.", nameof(w));
-            if (double.IsInfinity(h) || double.IsNaN(h)) throw new ArgumentException("Parameter cannot be infinity or NaN.", nameof(h));
+            _InternalUtility.ValidateDouble(w, nameof(w));
+            _InternalUtility.ValidateDouble(h, nameof(h));
 
             Width = w;
             Height = h;

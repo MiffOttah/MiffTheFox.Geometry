@@ -13,8 +13,8 @@ namespace MiffTheFox.Geometry
 
         public Point(double x, double y)
         {
-            if (double.IsInfinity(x) || double.IsNaN(x)) throw new ArgumentException("Parameter cannot be infinity or NaN.", nameof(x));
-            if (double.IsInfinity(y) || double.IsNaN(y)) throw new ArgumentException("Parameter cannot be infinity or NaN.", nameof(y));
+            _InternalUtility.ValidateDouble(x, nameof(x));
+            _InternalUtility.ValidateDouble(y, nameof(y));
 
             X = x;
             Y = y;

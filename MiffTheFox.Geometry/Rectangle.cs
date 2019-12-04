@@ -64,6 +64,9 @@ namespace MiffTheFox.Geometry
             Height = size.Height;
         }
 
+        public static Rectangle FromLTRB(double left, double top, double right, double bottom)
+            => new Rectangle(left, top, right - left, bottom - top);
+
         public void Deconstruct(out double x, out double y, out double width, out double height)
         {
             x = X;

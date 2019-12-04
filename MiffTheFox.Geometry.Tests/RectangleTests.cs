@@ -58,6 +58,20 @@ namespace MiffTheFox.Geometry.Tests
         }
 
         [TestMethod]
+        [DataRow(10, 12, 30, 34, 10, 12, 20, 22)]
+        [DataRow(-50, -45, -21, -22, -50, -45, 29, 23)]
+        [DataRow(-10, 0, 22, 13, -10, 0, 32, 13)]
+        [DataRow(4, 5, -11, -12, 4, 5, -15, -17)]
+        [DataRow(-5, -8, 0, 0, -5, -8, 5, 8)]
+        [DataRow(0, 0, 4, 8, 0, 0, 4, 8)]
+        public void TestFromLTRB(double l, double t, double r, double b, double x, double y, double w, double h)
+        {
+            var rect = Rectangle.FromLTRB(l, t, r, b);
+            var expected = new Rectangle(x, y, w, h);
+            Assert.AreEqual(expected, rect);
+        }
+
+        [TestMethod]
         [DataRow(0, 0, 0, 0)]
         [DataRow(10, 10, 20, 20)]
         [DataRow(-5, -6, 20, 21)]

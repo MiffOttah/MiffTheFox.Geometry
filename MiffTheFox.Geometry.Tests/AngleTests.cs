@@ -192,5 +192,39 @@ namespace MiffTheFox.Geometry.Tests
             Assert.AreEqual(0.54785347388, angle.Sinh(), DELTA);
             Assert.AreEqual(0.48047277815, angle.Tanh(), DELTA);
         }
+
+        [TestMethod]
+        [DataRow(0, 1, 0)]
+        [DataRow(0.2, 0.309016994, 0.951056516)]
+        [DataRow(0.25, 0, 1)]
+        [DataRow(0.5, -1, 0)]
+        [DataRow(0.6666, -0.500362716, -0.865815888)]
+        [DataRow(0.75, 0, -1)]
+        [DataRow(0.9, 0.809016994, -0.587785252)]
+        [DataRow(1, 1, 0)]
+        public void TestToPoint(double turns, double expectedX, double expectedY)
+        {
+            var angle = new Angle(turns);
+            (double x, double y) = angle.ToPoint();
+            Assert.AreEqual(expectedX, x, DELTA);
+            Assert.AreEqual(expectedY, y, DELTA);
+        }
+
+        [TestMethod]
+        [DataRow(0, 2.5, 2.5, 0)]
+        [DataRow(0.2, 2.5, 0.772542486, 2.377641291)]
+        [DataRow(0.25, 2.5, 0, 2.5)]
+        [DataRow(0.5, 2.5, -2.5, 0)]
+        [DataRow(0.6666, 2.5, -1.25090679, -2.164539721)]
+        [DataRow(0.75, 2.5, 0, -2.5)]
+        [DataRow(0.9, 2.5, 2.022542486, -1.469463131)]
+        [DataRow(1, 2.5, 2.5, 0)]
+        public void TestToPointWithRadius(double turns, double radius, double expectedX, double expectedY)
+        {
+            var angle = new Angle(turns);
+            (double x, double y) = angle.ToPoint(radius);
+            Assert.AreEqual(expectedX, x, DELTA);
+            Assert.AreEqual(expectedY, y, DELTA);
+        }
     }
 }

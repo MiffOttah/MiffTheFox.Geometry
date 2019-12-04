@@ -136,6 +136,21 @@ namespace MiffTheFox.Geometry
         public double Cosh() => Math.Cosh(Radians);
         public double Sinh() => Math.Sinh(Radians);
         public double Tanh() => Math.Tanh(Radians);
+
+        public Point ToPoint()
+        {
+            double theta = Radians; // prefetch radians value
+            return new Point(Math.Cos(theta), Math.Sin(theta));
+        }
+        public Point ToPoint(double radius)
+        {
+            double theta = Radians; // prefetch radians value
+            return new Point(Math.Cos(theta) * radius, Math.Sin(theta) * radius);
+        }
+        public Point ToPoint(Point center, double radius)
+        {
+            return ToPoint(radius) + center;
+        }
     }
 
     public enum AngleUnit : byte

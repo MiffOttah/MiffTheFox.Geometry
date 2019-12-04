@@ -88,5 +88,18 @@ namespace MiffTheFox.Geometry
             return b.ToString();
         }
         public override string ToString() => ToString(null, null);
+
+        public static implicit operator Rectangle(Integer.IntRectangle r) => new Rectangle(r.X, r.Y, r.Width, r.Height);
+        public static explicit operator Integer.IntRectangle(Rectangle r) => r.ToIntRectangle();
+
+        public Integer.IntRectangle ToIntRectangle(MidpointRounding rounding = MidpointRounding.AwayFromZero)
+        {
+            return new Integer.IntRectangle(
+                (int)Math.Round(X, rounding),
+                (int)Math.Round(Y, rounding),
+                (int)Math.Round(Width, rounding),
+                (int)Math.Round(Height, rounding)
+            );
+        }
     }
 }

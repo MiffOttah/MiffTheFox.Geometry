@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MiffTheFox.Geometry.Integer;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -100,6 +101,23 @@ namespace MiffTheFox.Geometry.Tests
             Assert.AreEqual(new Rectangle(10, 20, 12, 13), r.With(y: 20));
             Assert.AreEqual(new Rectangle(10, 11, 20, 13), r.With(width: 20));
             Assert.AreEqual(new Rectangle(10, 11, 12, 20), r.With(height: 20));
+        }
+
+        [TestMethod]
+        [DataRow(2, -2, 2, -2, MidpointRounding.AwayFromZero, DisplayName = "Whole numbers")]
+        [DataRow(5.8, -1.1, 6, -1, MidpointRounding.AwayFromZero, DisplayName = "Rounding AFZ without midpoint")]
+        [DataRow(5.5, 4.5, 6, 5, MidpointRounding.AwayFromZero, DisplayName = "Round positive midpoint")]
+        [DataRow(-5.5, -4.5, -6, -5, MidpointRounding.AwayFromZero, DisplayName = "Round negative midpoint")]
+        [DataRow(5.5, 4.5, 6, 4, MidpointRounding.ToEven, DisplayName = "Even rounding")]
+        public void TestCast(double x, double y, int xR, int yR, MidpointRounding rounding)
+        {
+            var r1Expected = new IntRectangle(xR, yR, 10, 10);
+            var r1Actual = new Rectangle(x, y, 10, 10);
+            Assert.AreEqual(r1Expected, r1Actual.ToIntRectangle(rounding));
+
+            var r2Expected = new IntRectangle(10, 10, xR, yR);
+            var r2Actual = new Rectangle(10, 10, x, y);
+            Assert.AreEqual(r2Expected, r2Actual.ToIntRectangle(rounding));
         }
     }
 }

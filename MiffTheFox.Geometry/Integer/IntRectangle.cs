@@ -32,6 +32,14 @@ namespace MiffTheFox.Geometry.Integer
             Height = size.Height;
         }
 
+        public void Deconstruct(out int x, out int y, out int width, out int height)
+        {
+            x = X;
+            y = Y;
+            width = Width;
+            height = Height;
+        }
+
         public IntRectangle With(int? x = null, int? y = null, int? width = null, int? height = null)
         {
             return new IntRectangle(x ?? X, y ?? Y, width ?? Width, height ?? Height);

@@ -63,6 +63,22 @@ namespace MiffTheFox.Geometry.Tests
         [DataRow(-5, -6, 20, 21)]
         [DataRow(8.2, 8.3, 4.1, 4.2)]
         [DataRow(12, 12, -6, -6)]
+        public void TestDeconstruction(double x, double y, double w, double h)
+        {
+            var r = new Rectangle(x, y, w, h);
+            (double x2, double y2, double w2, double h2) = r;
+            Assert.AreEqual(x, x2);
+            Assert.AreEqual(y, y2);
+            Assert.AreEqual(w, w2);
+            Assert.AreEqual(h, h2);
+        }
+
+        [TestMethod]
+        [DataRow(0, 0, 0, 0)]
+        [DataRow(10, 10, 20, 20)]
+        [DataRow(-5, -6, 20, 21)]
+        [DataRow(8.2, 8.3, 4.1, 4.2)]
+        [DataRow(12, 12, -6, -6)]
         public void TestSizeAndPositionProperties(double x, double y, double w, double h)
         {
             var r = new Rectangle(x, y, w, h);
@@ -118,6 +134,33 @@ namespace MiffTheFox.Geometry.Tests
             var r2Expected = new IntRectangle(10, 10, xR, yR);
             var r2Actual = new Rectangle(10, 10, x, y);
             Assert.AreEqual(r2Expected, r2Actual.ToIntRectangle(rounding));
+        }
+
+        [TestMethod]
+        [DataRow(5, 10, 2, 8, 7, 18)]
+        [DataRow(-10, -20, 25, 15, 15, -5)]
+        [DataRow(40, -3, 10, 10, 50, 7)]
+        [DataRow(10, 10, -2, -2, 8, 8)]
+        public void TestRightBottom(double x, double y, double w, double h, double expectedRight, double expectedBottom)
+        {
+            var r = new Rectangle(x, y, w, h);
+            Assert.AreEqual(r.Right, expectedRight);
+            Assert.AreEqual(r.Bottom, expectedBottom);
+        }
+
+        [TestMethod]
+        [DataRow(5, 10, 2, 8, 5, 10, 2, 8)]
+        [DataRow(4, 11, -2, -8, 6, 19, 2, 8)]
+        [DataRow(-8, -15, 3, 3, -8, -15, 3, 3)]
+        [DataRow(-10, -50, -4, -1, -6, -49, 4, 1)]
+        [DataRow(0, 0, -4, 3, 4, 0, 4, 3)]
+        [DataRow(0, 0, 4, -3, 0, 3, 4, 3)]
+        [DataRow(5, 5, 0, 0, 5, 5, 0, 0)]
+        [DataRow(0, 0, 0, 0, 0, 0, 0, 0)]
+        public void TestCanonical(double x, double y, double w, double h, double xExpected, double yExpected, double wExpected, double hExpected)
+        {
+            var r = new Rectangle(x, y, w, h);
+            Assert.AreEqual(new Rectangle(xExpected, yExpected, wExpected, hExpected), r.Canonical);
         }
     }
 }

@@ -44,6 +44,22 @@ namespace MiffTheFox.Geometry.Tests.Integer
         [DataRow(-5, -6, 20, 21)]
         [DataRow(82, 83, 41, 42)]
         [DataRow(12, 12, -6, -6)]
+        public void TestDeconstruction(int x, int y, int w, int h)
+        {
+            var r = new IntRectangle(x, y, w, h);
+            (int x2, int y2, int w2, int h2) = r;
+            Assert.AreEqual(x, x2);
+            Assert.AreEqual(y, y2);
+            Assert.AreEqual(w, w2);
+            Assert.AreEqual(h, h2);
+        }
+
+        [TestMethod]
+        [DataRow(0, 0, 0, 0)]
+        [DataRow(10, 10, 20, 20)]
+        [DataRow(-5, -6, 20, 21)]
+        [DataRow(82, 83, 41, 42)]
+        [DataRow(12, 12, -6, -6)]
         public void TestSizeAndPositionProperties(int x, int y, int w, int h)
         {
             var r = new IntRectangle(x, y, w, h);

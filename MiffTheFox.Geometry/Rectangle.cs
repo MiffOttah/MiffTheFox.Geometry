@@ -16,6 +16,33 @@ namespace MiffTheFox.Geometry
         public Point Position => new Point(X, Y);
         public Size Size => new Size(Width, Height);
 
+        public double Right => X + Width;
+        public double Bottom => Y + Height;
+
+        /// <summary>
+        /// If the Rectangle's size is negative, get a rectangle
+        /// compensating for the negative size by projecting backwards.
+        /// Otherwise returns the same rectangle.
+        /// </summary>
+        public Rectangle Canonical
+        {
+            get
+            {
+                (double x, double y, double width, double height) = this;
+                if (width < 0)
+                {
+                    x -= width;
+                    width = -width;
+                }
+                if (height < 0)
+                {
+                    y -= height;
+                    height = -height;
+                }
+                return new Rectangle(x, y, width, height);
+            }
+        }
+
         public Rectangle(double x, double y, double width, double height)
         {
             _InternalUtility.ValidateDouble(x, nameof(x));
@@ -35,6 +62,14 @@ namespace MiffTheFox.Geometry
             Y = position.Y;
             Width = size.Width;
             Height = size.Height;
+        }
+
+        public void Deconstruct(out double x, out double y, out double width, out double height)
+        {
+            x = X;
+            y = Y;
+            width = Width;
+            height = Height;
         }
 
         public Rectangle With(double? x = null, double? y = null, double? width = null, double? height = null)

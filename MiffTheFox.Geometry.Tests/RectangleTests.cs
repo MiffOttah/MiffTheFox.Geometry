@@ -219,6 +219,32 @@ namespace MiffTheFox.Geometry.Tests
         }
 
         [TestMethod]
+        [DataRow(0, 0, 0, 0, "0,0;0x0")]
+        [DataRow(4, 14, 2, 12, "4,14;2x12")]
+        [DataRow(-2, -3, 10, 11, "-2,-3;10x11")]
+        [DataRow(-2, 3, -10, -11, "-2,3;-10x-11")]
+        [DataRow(0.5, 0.5, 4.5, 4.5, "0.5,0.5;4.5x4.5")]
+        [DataRow(95.3, -102, 40.2, 44.9, "95.3,-102;40.2x44.9")]
+        public void TestSerialize(double x, double y, double w, double h, string serialized)
+        {
+            var r = new Rectangle(x, y, w, h);
+            Assert.AreEqual(serialized, r.Serialize());
+        }
+
+        [TestMethod]
+        [DataRow(0, 0, 0, 0, "0,0;0x0")]
+        [DataRow(4, 14, 2, 12, "4,14;2x12")]
+        [DataRow(-2, -3, 10, 11, "-2,-3;10x11")]
+        [DataRow(-2, 3, -10, -11, "-2,3;-10x-11")]
+        [DataRow(0.5, 0.5, 4.5, 4.5, "0.5,0.5;4.5x4.5")]
+        [DataRow(95.3, -102, 40.2, 44.9, "95.3,-102;40.2x44.9")]
+        public void TestDeSerialize(double x, double y, double w, double h, string serialized)
+        {
+            var r = new Rectangle(x, y, w, h);
+            Assert.AreEqual(r, Rectangle.DeSerialize(serialized));
+        }
+
+        [TestMethod]
         public void TestInflate2()
         {
             // TODO: Write test

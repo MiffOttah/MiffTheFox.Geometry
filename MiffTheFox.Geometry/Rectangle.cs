@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace MiffTheFox.Geometry
@@ -163,6 +164,29 @@ namespace MiffTheFox.Geometry
                 (int)Math.Round(Width, rounding),
                 (int)Math.Round(Height, rounding)
             );
+        }
+
+        public string Serialize()
+        {
+            return string.Format(CultureInfo.InvariantCulture, "{0:R},{1:R};{2:R}x{3:R}", X, Y, Width, Height);
+        }
+        public static Rectangle DeSerialize(string serialized)
+        {
+            double to(char c)
+            {
+                int ix = serialized.IndexOf(c);
+                if (ix == -1) throw new FormatException();
+                string r = serialized.Remove(ix);
+                serialized = serialized.Substring(ix + 1);
+                return double.Parse(r, CultureInfo.InvariantCulture);
+            }
+
+            double x = to(',');
+            double y = to(';');
+            double w = to('x');
+            double h = double.Parse(serialized, CultureInfo.InvariantCulture);
+
+            return new Rectangle(x, y, w, h);
         }
 
         public Rectangle Inflate(double left, double top, double right, double bottom)

@@ -217,5 +217,19 @@ namespace MiffTheFox.Geometry.Tests
             Assert.AreEqual(expected, Rectangle.Around(x, y, w, h));
             Assert.AreEqual(expected, Rectangle.Around(new Point(x, y), new Size(w, h)));
         }
+
+        [TestMethod]
+        public void TestInflate2()
+        {
+            // TODO: Write test
+            throw new NotImplementedException();
+        }
+
+        [TestMethod]
+        public void TestInflate4()
+        {
+            // TODO: Write test
+            throw new NotImplementedException();
+        }
     }
 }

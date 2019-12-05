@@ -164,5 +164,27 @@ namespace MiffTheFox.Geometry
                 (int)Math.Round(Height, rounding)
             );
         }
+
+        public Rectangle Inflate(double left, double top, double right, double bottom)
+        {
+            return new Rectangle(
+                X - left,
+                Y - top,
+                Width + left + right,
+                Height + top + bottom
+            );
+        }
+
+        public Rectangle Inflate(double x, double y)
+        {
+            return new Rectangle(
+                X - x,
+                Y - y,
+                Width + x * 2,
+                Height + x * 2
+            );
+        }
+
+        public Rectangle Inflate(double amount) => Inflate(amount, amount);
     }
 }

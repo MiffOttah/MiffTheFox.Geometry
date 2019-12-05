@@ -72,6 +72,14 @@ namespace MiffTheFox.Geometry
         public static Rectangle FromLTRB(double left, double top, double right, double bottom)
             => new Rectangle(left, top, right - left, bottom - top);
 
+        public static Rectangle Between(Point point1, Point point2)
+        {
+            double l, r, t, b;
+            (l, r) = _InternalUtility.MinMax(point1.X, point2.X);
+            (t, b) = _InternalUtility.MinMax(point1.Y, point2.Y);
+            return FromLTRB(l, t, r, b);
+        }
+
         public static Rectangle Around(Point midpoint, Size size)
         {
             return new Rectangle(

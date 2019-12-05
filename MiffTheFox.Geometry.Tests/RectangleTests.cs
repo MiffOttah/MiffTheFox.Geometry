@@ -74,6 +74,19 @@ namespace MiffTheFox.Geometry.Tests
         }
 
         [TestMethod]
+        [DataRow(-1, -1, 1, 1, -1, -1, 2, 2)]
+        [DataRow(2, 0, 0, 3, 0, 0, 2, 3)]
+        [DataRow(4, 4, 4, 4, 4, 4, 0, 0)]
+        [DataRow(1, 1, -1, -1, -1, -1, 2, 2)]
+        [DataRow(0, 0, 0, 0, 0, 0, 0, 0)]
+        public void TestBetween(double x1, double y1, double x2, double y2, double xExpected, double yExpected, double wExpected, double hExpected)
+        {
+            var expected = new Rectangle(xExpected, yExpected, wExpected, hExpected);
+            var actual = Rectangle.Between(new Point(x1, y1), new Point(x2, y2));
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
         [DataRow(0, 0, 0, 0)]
         [DataRow(10, 10, 20, 20)]
         [DataRow(-5, -6, 20, 21)]

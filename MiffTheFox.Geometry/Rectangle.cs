@@ -205,7 +205,7 @@ namespace MiffTheFox.Geometry
                 X - x,
                 Y - y,
                 Width + x * 2,
-                Height + x * 2
+                Height + y * 2
             );
         }
 

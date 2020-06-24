@@ -255,10 +255,12 @@ namespace MiffTheFox.Geometry.Tests
         }
 
         [TestMethod]
-        public void TestInflate4()
+        [DataRow(1, 2, 3, 4, "1,1;1x1", "0,-1;5x7")]
+        [DataRow(1, 0, 0, -1, "2,2;2x2", "1,2;3x1")]
+        public void TestInflate4(double l, double t, double r, double b, string baseRect, string expected)
         {
-            // TODO: Write test
-            throw new NotImplementedException();
+            var rect = Rectangle.DeSerialize(baseRect);
+            Assert.AreEqual(Rectangle.DeSerialize(expected), rect.Inflate(l, t, r, b));
         }
     }
 }

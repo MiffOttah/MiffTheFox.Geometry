@@ -39,12 +39,12 @@ namespace MiffTheFox.Geometry
         public string ToString(string format, IFormatProvider formatProvider) => Value.ToString(format, formatProvider);
 
         public double Lerp(double max) => Value * max;
-        public double Lerp(double min, double max) => Value * max + min;
+        public double Lerp(double min, double max) => Value * (max - min) + min;
 
         public int Lerp(int max, MidpointRounding midpointRounding = MidpointRounding.AwayFromZero)
-            => (int)Math.Round(Value * max, midpointRounding);
+            => (int)Math.Round(Lerp((double) max), midpointRounding);
         public int Lerp(int min, int max, MidpointRounding midpointRounding = MidpointRounding.AwayFromZero)
-            => (int)Math.Round(Value * max, midpointRounding) + min;
+            => (int)Math.Round(Lerp((double) min, max), midpointRounding);
 
         public static double operator *(Portion portion, double max) => portion.Lerp(max);
         public static double operator *(double max, Portion portion) => portion.Lerp(max);
@@ -57,7 +57,7 @@ namespace MiffTheFox.Geometry
             if (denominator <= 0) throw new ArgumentOutOfRangeException(nameof(denominator), "Denominator cannot be negative or zero.");
             if (numerator > denominator) throw new ArgumentOutOfRangeException(nameof(numerator), "Numerator cannot be greater than denominator.");
 
-            return new Portion((double)numerator / (double)denominator);
+            return new Portion((double)numerator / denominator);
         }
         public static Portion Fraction(int denominator) => Fraction(1, denominator);
 

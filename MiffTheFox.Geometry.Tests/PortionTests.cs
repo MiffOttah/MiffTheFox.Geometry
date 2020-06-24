@@ -120,7 +120,7 @@ namespace MiffTheFox.Geometry.Tests
             var por = new Portion(portion);
 
             Assert.AreEqual(expected, por.Lerp(max), DELTA);
-            Assert.AreEqual(expected + 1.0, por.Lerp(1.0, max), DELTA);
+            Assert.AreEqual(expected + 1.5, por.Lerp(1.5, max + 1.5), DELTA);
             Assert.AreEqual(expected, por * max, DELTA);
             Assert.AreEqual(expected, max * por, DELTA);
         }
@@ -131,14 +131,16 @@ namespace MiffTheFox.Geometry.Tests
         [DataRow(0, -5, 0)]
         [DataRow(1, -5, -5)]
         [DataRow(0.8, 0, 0)]
+        [DataRow(0.32, 10, 3)]
+        [DataRow(0.36, 10, 4)]
         public void TestIntegerLerp(double portion, int max, int expected)
         {
             var por = new Portion(portion);
 
-            Assert.AreEqual(expected, por.Lerp(max), DELTA);
-            Assert.AreEqual(expected + 1, por.Lerp(1, max), DELTA);
-            Assert.AreEqual(expected, por * max, DELTA);
-            Assert.AreEqual(expected, max * por, DELTA);
+            Assert.AreEqual(expected, por.Lerp(max));
+            Assert.AreEqual(expected + 2, por.Lerp(2, max + 2));
+            Assert.AreEqual(expected, por * max);
+            Assert.AreEqual(expected, max * por);
         }
 
         [TestMethod]

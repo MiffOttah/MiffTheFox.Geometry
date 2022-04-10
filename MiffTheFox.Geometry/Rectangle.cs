@@ -5,19 +5,54 @@ using System.Text;
 
 namespace MiffTheFox.Geometry
 {
+    /// <summary>
+    /// Represents a specific rectangular area in 2D space.
+    /// </summary>
     public readonly struct Rectangle : IEquatable<Rectangle>, IFormattable
     {
+        /// <summary>
+        /// An area centered on 0,0 with a size of 0x0
+        /// </summary>
         public static readonly Rectangle Empty = new Rectangle();
 
+        /// <summary>
+        /// The X coordinate of the left edge of the rectangle.
+        /// </summary>
         public double X { get; }
+
+        /// <summary>
+        /// The Y coordinate of the top edge of the rectangle.
+        /// </summary>
         public double Y { get; }
+
+        /// <summary>
+        /// The width of the rectangle.
+        /// </summary>
         public double Width { get; }
+
+        /// <summary>
+        /// The height of the rectangle.
+        /// </summary>
         public double Height { get; }
 
+        /// <summary>
+        /// The position of the top-left corner of the rectangle.
+        /// </summary>
         public Point Position => new Point(X, Y);
+
+        /// <summary>
+        /// The size of the rectangle.
+        /// </summary>
         public Size Size => new Size(Width, Height);
 
+        /// <summary>
+        /// The X coordiate of the right edge of the rectangle.
+        /// </summary>
         public double Right => X + Width;
+
+        /// <summary>
+        /// The Y cooridate of the bottom edge of the rectangle.
+        /// </summary>
         public double Bottom => Y + Height;
 
         /// <summary>
@@ -49,6 +84,9 @@ namespace MiffTheFox.Geometry
         /// </summary>
         public Point Midpoint => new Point(X + Width / 2, Y + Height / 2);
 
+        /// <summary>
+        /// Create a rectangle at the specified location with the specified size.
+        /// </summary>
         public Rectangle(double x, double y, double width, double height)
         {
             _InternalUtility.ValidateDouble(x, nameof(x));
@@ -62,6 +100,9 @@ namespace MiffTheFox.Geometry
             Height = height;
         }
 
+        /// <summary>
+        /// Create a rectangle at the specified location with the specified size.
+        /// </summary>
         public Rectangle(Point position, Size size)
         {
             X = position.X;
@@ -70,9 +111,15 @@ namespace MiffTheFox.Geometry
             Height = size.Height;
         }
 
+        /// <summary>
+        /// Creates a rectangle where the edges are at specific coordinates.
+        /// </summary>
         public static Rectangle FromLTRB(double left, double top, double right, double bottom)
             => new Rectangle(left, top, right - left, bottom - top);
 
+        /// <summary>
+        /// Creates a rectangle representing the area between two points.
+        /// </summary>
         public static Rectangle Between(Point point1, Point point2)
         {
             double l, r, t, b;
@@ -81,6 +128,9 @@ namespace MiffTheFox.Geometry
             return FromLTRB(l, t, r, b);
         }
 
+        /// <summary>
+        /// Creates a rectangle with the specified size with a midpoint at the specified point.
+        /// </summary>
         public static Rectangle Around(Point midpoint, Size size)
         {
             return new Rectangle(
@@ -90,6 +140,9 @@ namespace MiffTheFox.Geometry
                 size.Height
             );
         }
+        /// <summary>
+        /// Creates a rectangle with the specified size with a midpoint at the specified point.
+        /// </summary>
         public static Rectangle Around(double x, double y, double width, double right)
             => Around(new Point(x, y), new Size(width, right));
 
@@ -189,6 +242,10 @@ namespace MiffTheFox.Geometry
             return new Rectangle(x, y, w, h);
         }
 
+        /// <summary>
+        /// Creates a rectangle where each edge is moved by the specified values away from the midpoint of the rectangle.
+        /// </summary>
+        /// <remarks>Negative values will move the edges closer to the midpoint.</remarks>
         public Rectangle Inflate(double left, double top, double right, double bottom)
         {
             return new Rectangle(
@@ -199,6 +256,10 @@ namespace MiffTheFox.Geometry
             );
         }
 
+        /// <summary>
+        /// Creates a rectangle where each edge is moved by the specified values away from the midpoint of the rectangle.
+        /// </summary>
+        /// <remarks>Negative values will move the edges closer to the midpoint.</remarks>
         public Rectangle Inflate(double x, double y)
         {
             return new Rectangle(
@@ -209,6 +270,10 @@ namespace MiffTheFox.Geometry
             );
         }
 
+        /// <summary>
+        /// Creates a rectangle where each edge is moved by the specified value away from the midpoint of the rectangle.
+        /// </summary>
+        /// <remarks>A negative value will move the edges closer to the midpoint.</remarks>
         public Rectangle Inflate(double amount) => Inflate(amount, amount);
     }
 }

@@ -4,11 +4,24 @@ using System.Text;
 
 namespace MiffTheFox.Geometry
 {
+    /// <summary>
+    /// Represents an angle in 2D space.
+    /// </summary>
     public readonly struct Angle : IFormattable, IEquatable<Angle>, IComparable<Angle>
     {
+        /// <summary>
+        /// An angle of 0°, which is aligned with the X axis to the right.
+        /// </summary>
         public static readonly Angle Zero = new Angle(0);
 
+        /// <summary>
+        /// The value of the angle in turns, where a complete revolution is equal to 1.
+        /// </summary>
         public double Turns { get; }
+
+        /// <summary>
+        /// The value of the angle in radians, where a complete revolution is equal to 2π.
+        /// </summary>
         public double Radians => ToUnit(AngleUnit.Radians);
 
         /// <summary>
@@ -16,12 +29,25 @@ namespace MiffTheFox.Geometry
         /// </summary>
         public Angle Canonical => new Angle(Turns - Math.Floor(Turns));
 
+        /// <summary>
+        /// Creates an angle with the specified value in the specified unit.
+        /// </summary>
+        /// <param name="value">The value of the angle, as measured in the unit provided in <paramref name="unit"/>.</param>
+        /// <param name="unit">The unit in which <paramref name="value"/> is measured.</param>
         public Angle(double value, AngleUnit unit)
             => Turns = _CheckValue(value, nameof(value)) / _GetConstantForAngleUnit(unit);
 
+        /// <summary>
+        /// Creates an angle with the specified value in turns.
+        /// </summary>
+        /// <param name="turns">The value of the angle, in turns.</param>
         public Angle(double turns)
             => Turns = _CheckValue(turns, nameof(turns));
 
+        /// <summary>
+        /// Creates an angle from a portion of a full circle.
+        /// </summary>
+        /// <param name="turns"></param>
         public Angle(Portion turns)
             => Turns = turns.Value; // Portions can be trusted to not be infinity or NaN
 
@@ -31,6 +57,11 @@ namespace MiffTheFox.Geometry
             return value;
         }
 
+        /// <summary>
+        /// Returns the value of the angle in a specified unit.
+        /// </summary>
+        /// <param name="unit">The unit in which the returned value will repersent the angle.</param>
+        /// <returns>The value of the angle in the unit specified by <paramref name="unit"/>.</returns>
         public double ToUnit(AngleUnit unit) => Turns * _GetConstantForAngleUnit(unit);
 
         private static double _GetConstantForAngleUnit(AngleUnit unit)
@@ -137,16 +168,33 @@ namespace MiffTheFox.Geometry
         public double Sinh() => Math.Sinh(Radians);
         public double Tanh() => Math.Tanh(Radians);
 
+        /// <summary>
+        /// Returns a point repersenting a vector with this angle and a length of 1.
+        /// </summary>
+        /// <returns>A point repersenting a vector with this angle and a length of 1</returns>
         public Point ToPoint()
         {
             double theta = Radians; // prefetch radians value
             return new Point(Math.Cos(theta), Math.Sin(theta));
         }
+
+        /// <summary>
+        /// Returns a point representing a vector with this angle and a specified length.
+        /// </summary>
+        /// <param name="radius">The length of the vector.</param>
+        /// <returns>A point represenging a vector with this angle ad a length equal to <paramref name="radius"/></returns>
         public Point ToPoint(double radius)
         {
             double theta = Radians; // prefetch radians value
             return new Point(Math.Cos(theta) * radius, Math.Sin(theta) * radius);
         }
+
+        /// <summary>
+        /// Returns a point offset from a specific point by a vector with this angle and a specified length.
+        /// </summary>
+        /// <param name="center">The point to which the offset will be applied</param>
+        /// <param name="radius">The magnitude of the offset.</param>
+        /// <returns>A point offset from <paramref name="center"/> by a vector with this angle and a length equal to <paramref name="radius"/>.</returns>
         public Point ToPoint(Point center, double radius)
         {
             return ToPoint(radius) + center;

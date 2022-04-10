@@ -4,6 +4,9 @@ using System.Text;
 
 namespace MiffTheFox.Geometry
 {
+    /// <summary>
+    /// Represents a point in 2D space.
+    /// </summary>
     public readonly struct Point : IEquatable<Point>, IFormattable
     {
         public static Point Empty { get; } = new Point();

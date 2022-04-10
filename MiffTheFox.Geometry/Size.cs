@@ -4,6 +4,9 @@ using System.Text;
 
 namespace MiffTheFox.Geometry
 {
+    /// <summary>
+    /// Represents a rectangular area in 2D space with no specific location.
+    /// </summary>
     public readonly struct Size : IEquatable<Size>, IFormattable
     {
         public static Size Empty { get; } = new Size();

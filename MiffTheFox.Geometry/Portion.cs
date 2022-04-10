@@ -4,15 +4,30 @@ using System.Text;
 
 namespace MiffTheFox.Geometry
 {
-    public readonly struct Portion : IEquatable<Portion>, IComparable<Portion>
+    /// <summary>
+    /// Repersents a portion of a whole as a real value between 0 and 1, inclusive.
+    /// </summary>
+    public readonly struct Portion : IFormattable, IEquatable<Portion>, IComparable<Portion>
     {
+        /// <summary>
+        /// The value of this portion, between 0 and 1, inclusive
+        /// </summary>
         public double Value { get; }
 
+        /// <summary>An empty portion with a value of 0, representing nothing from the whole.</summary>
         public static Portion Empty { get; } = new Portion(0);
+        /// <summary>An full portion with a value of 1, representing the entire whole.</summary>
         public static Portion Full { get; } = new Portion(1);
 
+        /// <summary>A portion that, together with this portion, represent a whole (adding to 1).</summary>
         public Portion Complement => new Portion(1.0 - Value);
 
+        /// <summary>
+        /// Creates a new portion with a specified value.
+        /// </summary>
+        /// <param name="value">The value of the portion, between 0 and 1 inclusive.</param>
+        /// <exception cref="ArgumentException">The value provided was not a real number.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The value provided was less than 0 or greater than 1.</exception>
         public Portion(double value)
         {
             if (double.IsInfinity(value) || double.IsNaN(value)) throw new ArgumentException("Value cannot be infinity or NaN.", nameof(value));
@@ -38,11 +53,39 @@ namespace MiffTheFox.Geometry
         public string ToString(string format) => Value.ToString(format, null);
         public string ToString(string format, IFormatProvider formatProvider) => Value.ToString(format, formatProvider);
 
+        /// <summary>
+        /// Find the value between 0 and <paramref name="max"/> corresponding to this portion.
+        /// </summary>
+        /// <param name="max">The maximum value that represents the full portion.</param>
+        /// <returns>A value between 0 and <paramref name="max"/> corresponding to this portion. A portion of 0 always returns 0; a portion of 1 always returns <paramref name="max"/>.</returns>
         public double Lerp(double max) => Value * max;
+
+        /// <summary>
+        /// Find the value between <paramref name="min"/> and <paramref name="max"/> corresponding to this portion.
+        /// </summary>
+        /// <param name="min">The minimum value that represents the empty portion.</param>
+        /// <param name="max">The maximum value that represents the full portion.</param>
+        /// <returns>A value between <paramref name="min"/> and <paramref name="max"/> corresponding to this portion. A portion of 0 always returns <paramref name="min"/>, a portion of 1 always returns <paramref name="max"/></returns>
+        /// <remarks>If <paramref name="min"/> is greater than <paramref name="max"/>, greater portions will result in a lower value and vice versa.</remarks>
         public double Lerp(double min, double max) => Value * (max - min) + min;
 
+        /// <summary>
+        /// Find the integral value between 0 and <paramref name="max"/> corresponding to this portion.
+        /// </summary>
+        /// <param name="max">The maximum value that represents the full portion.</param>
+        /// <param name="midpointRounding">The midpoint rounding method to use when the result is not an even integer.</param>
+        /// <returns>An integral value between 0 and <paramref name="max"/> corresponding to this portion. A portion of 0 always returns 0; a portion of 1 always returns <paramref name="max"/>.</returns>
         public int Lerp(int max, MidpointRounding midpointRounding = MidpointRounding.AwayFromZero)
             => (int)Math.Round(Lerp((double) max), midpointRounding);
+
+        /// <summary>
+        /// Find the integral value between <paramref name="min"/> and <paramref name="max"/> corresponding to this portion.
+        /// </summary>
+        /// <param name="min">The minimum value that represents the empty portion.</param>
+        /// <param name="max">The maximum value that represents the full portion.</param>
+        /// <param name="midpointRounding">The midpoint rounding method to use when the result is not an even integer.</param>
+        /// <returns>A integral value between <paramref name="min"/> and <paramref name="max"/> corresponding to this portion. A portion of 0 always returns <paramref name="min"/>, a portion of 1 always returns <paramref name="max"/></returns>
+        /// <remarks>If <paramref name="min"/> is greater than <paramref name="max"/>, greater portions will result in a lower value and vice versa.</remarks>
         public int Lerp(int min, int max, MidpointRounding midpointRounding = MidpointRounding.AwayFromZero)
             => (int)Math.Round(Lerp((double) min, max), midpointRounding);
 
@@ -51,6 +94,13 @@ namespace MiffTheFox.Geometry
         public static int operator *(Portion portion, int max) => portion.Lerp(max);
         public static int operator *(int max, Portion portion) => portion.Lerp(max);
 
+        /// <summary>
+        /// Repersents the portion that is the fraction of <paramref name="numerator"/> to <paramref name="denominator"/>.
+        /// </summary>
+        /// <param name="numerator">The numerator of the fraction.</param>
+        /// <param name="denominator">The denominator of the fraction.</param>
+        /// <returns>A portion equal to the fraction of <paramref name="numerator"/> to <paramref name="denominator"/></returns>
+        /// <exception cref="ArgumentOutOfRangeException">The <paramref name="denominator"/> is less than or equal to zero, or <paramref name="numerator"/> is less than zero or greater than <paramref name="denominator"/>.</exception>
         public static Portion Fraction(int numerator, int denominator)
         {
             if (numerator < 0) throw new ArgumentOutOfRangeException(nameof(numerator), "Numerator cannot be negative.");
@@ -59,6 +109,12 @@ namespace MiffTheFox.Geometry
 
             return new Portion((double)numerator / denominator);
         }
+
+        /// <summary>
+        /// Represents the porition that is equal to the fraction of 1 to <paramref name="denominator"/>
+        /// </summary>
+        /// <param name="denominator">The denominator of the fraction.</param>
+        /// <returns>A portion equal to the fraction of 1 to <paramref name="denominator"/></returns>
         public static Portion Fraction(int denominator) => Fraction(1, denominator);
 
         private static Portion _CastIn(double value)
